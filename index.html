@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Programación · Profe Macón</title>
+
+    <style>
+      :root {
+        --white: #ffffff;
+        --gray-light: #f4f2f5;
+        --gray: #b2acac;
+        --gray-mid: #949494;
+        --gray-dark: #827d7d;
+        --black: #000000;
+        --violet: #988db3;
+        --teal: #00a99d;
+        --shadow: 0 14px 35px rgba(0, 0, 0, 0.12);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: var(--gray-light);
+        color: var(--black);
+        line-height: 1.6;
+      }
+
+      header {
+        background: rgba(255, 255, 255, 0.96);
+        padding: 14px 5%;
+        box-shadow: 0 2px 14px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+
+      .nav {
+        max-width: 1180px;
+        margin: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .brand img {
+        height: 46px;
+        width: auto;
+      }
+
+      .brand-text {
+        font-weight: 800;
+        letter-spacing: 0.02em;
+      }
+
+      .tag {
+        background: var(--gray-light);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 999px;
+        padding: 8px 14px;
+        font-weight: 700;
+        color: var(--gray-dark);
+        white-space: nowrap;
+      }
+
+      .hero {
+        background:
+          radial-gradient(
+            circle at 18% 20%,
+            rgba(152, 141, 179, 0.22),
+            transparent 30%
+          ),
+          radial-gradient(
+            circle at 82% 20%,
+            rgba(0, 169, 157, 0.16),
+            transparent 28%
+          ),
+          var(--white);
+        text-align: center;
+        padding: 70px 20px 56px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      }
+
+      .hero-logo {
+        max-width: 310px;
+        width: 60%;
+        margin: 0 auto 18px;
+        display: block;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.2rem, 5vw, 4.1rem);
+        line-height: 1.05;
+        margin-bottom: 18px;
+      }
+
+      .hero p {
+        max-width: 760px;
+        margin: auto;
+        font-size: 1.18rem;
+        color: #2d2d2d;
+      }
+
+      .hero strong {
+        color: var(--teal);
+      }
+
+      main {
+        width: 92%;
+        max-width: 1180px;
+        margin: auto;
+        padding: 46px 0;
+      }
+
+      .section-title {
+        margin-bottom: 24px;
+      }
+
+      .section-title h2 {
+        font-size: clamp(1.8rem, 3vw, 2.5rem);
+        margin-bottom: 8px;
+      }
+
+      .section-title p {
+        color: var(--gray-dark);
+        font-size: 1.05rem;
+        font-weight: 600;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 26px;
+      }
+
+      .card {
+        background: var(--white);
+        border-radius: 28px;
+        padding: 26px;
+        box-shadow: var(--shadow);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+      }
+
+      .badge {
+        background: var(--teal);
+        color: var(--white);
+        border-radius: 999px;
+        padding: 7px 13px;
+        font-size: 0.9rem;
+        font-weight: 800;
+      }
+
+      .nivel {
+        background: var(--gray-light);
+        color: var(--gray-dark);
+        border-radius: 999px;
+        padding: 7px 13px;
+        font-size: 0.9rem;
+        font-weight: 800;
+      }
+
+      .card h3 {
+        font-size: 1.55rem;
+        line-height: 1.15;
+      }
+
+      .card p {
+        color: #2d2d2d;
+      }
+
+      .mini-lista {
+        background: var(--gray-light);
+        border-left: 6px solid var(--violet);
+        border-radius: 16px;
+        padding: 15px 18px;
+      }
+
+      .mini-lista ul {
+        padding-left: 1.15rem;
+      }
+
+      .mini-lista li {
+        margin: 0.25rem 0;
+      }
+
+      .btn {
+        display: inline-block;
+        text-align: center;
+        text-decoration: none;
+        background: var(--teal);
+        color: var(--white);
+        font-weight: 900;
+        padding: 14px 20px;
+        border-radius: 16px;
+        box-shadow: 0 8px 18px rgba(0, 169, 157, 0.25);
+        transition:
+          transform 0.15s ease,
+          box-shadow 0.15s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 24px rgba(0, 169, 157, 0.32);
+      }
+
+      .nota {
+        margin-top: 36px;
+        background: var(--black);
+        color: var(--white);
+        border-radius: 28px;
+        padding: 28px;
+        box-shadow: var(--shadow);
+      }
+
+      .nota h2 {
+        margin-bottom: 10px;
+      }
+
+      .nota p {
+        color: #f2f2f2;
+        max-width: 850px;
+      }
+
+      footer {
+        background: var(--white);
+        text-align: center;
+        padding: 34px 20px;
+        color: var(--gray-dark);
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+        font-size: 0.95rem;
+      }
+
+      footer img {
+        height: 42px;
+        width: auto;
+        display: block;
+        margin: 0 auto 12px;
+      }
+
+      @media (max-width: 640px) {
+        .nav {
+          flex-direction: column;
+        }
+
+        .brand img {
+          height: 40px;
+        }
+
+        .brand-text {
+          display: none;
+        }
+
+        .hero {
+          padding: 46px 16px 38px;
+        }
+
+        .card {
+          padding: 22px;
+          border-radius: 22px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <nav class="nav" aria-label="Navegación principal">
+        <div class="brand">
+          <img src="LogoProfeMacon.png" alt="Logo Profe Macón" />
+          <div class="brand-text">Profe Macón</div>
+        </div>
+
+        <div class="tag">Programación I · 2026</div>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <img class="hero-logo" src="LogoProfeMacon.png" alt="Profe Macón" />
+
+      <h1>Actividades de Programación</h1>
+
+      <p>
+        Este espacio reúne actividades visuales e interactivas para aprender a
+        <strong>pensar como programadores</strong>: entender problemas,
+        reconocer datos, seguir pasos y explicar soluciones.
+      </p>
+    </section>
+
+    <main>
+      <section>
+        <div class="section-title">
+          <h2>Actividades disponibles</h2>
+          <p>
+            Entrá a cada actividad, mirá el material y realizá la consigna
+            indicada por el docente.
+          </p>
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <div class="card-header">
+              <span class="badge">Actividad 1</span>
+              <span class="nivel">Introductoria</span>
+            </div>
+
+            <h3>Pensar como programador</h3>
+
+            <p>
+              En esta actividad vas a mirar imágenes para comprender qué hacen
+              el usuario, el programa y el programador.
+            </p>
+
+            <div class="mini-lista">
+              <ul>
+                <li>Roles: usuario, programa y programador.</li>
+                <li>Datos de entrada y salida.</li>
+                <li>Instrucciones claras.</li>
+                <li>Pasos ordenados de un algoritmo.</li>
+              </ul>
+            </div>
+
+            <a class="btn" href="actividad_1/">Entrar a la actividad</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="nota">
+        <h2>Recordá</h2>
+        <p>
+          Programar no es solo escribir código. Antes hay que entender el
+          problema, pensar qué datos necesita el programa, qué instrucciones
+          debe seguir y qué resultado debe mostrar.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <img src="logo_PM.png" alt="Logo PM" />
+      Programación I · Pensamiento Computacional · Profe Macón · 2026
+    </footer>
+  </body>
+</html>
