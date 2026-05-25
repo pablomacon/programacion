@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pensar como Programador · Profe Macón</title>
+
+    <style>
+      :root {
+        --white: #ffffff;
+        --gray-light: #f4f2f5;
+        --gray: #b2acac;
+        --gray-mid: #949494;
+        --gray-dark: #827d7d;
+        --black: #000000;
+        --violet: #988db3;
+        --teal: #00a99d;
+
+        --usuario: #3b82f6;
+        --programa: #22c55e;
+        --programador: #f97316;
+        --shadow: 0 14px 35px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: var(--gray-light);
+        color: var(--black);
+        line-height: 1.6;
+      }
+
+      header {
+        background: rgba(255, 255, 255, 0.96);
+        color: var(--black);
+        padding: 14px 5%;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 2px 14px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(8px);
+      }
+
+      .nav {
+        max-width: 1180px;
+        margin: auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 22px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        min-width: 210px;
+      }
+
+      .brand-logo {
+        height: 46px;
+        width: auto;
+        display: block;
+      }
+
+      .brand-text {
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        color: var(--black);
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        font-weight: 800;
+        font-size: 0.95rem;
+      }
+
+      .chip {
+        background: var(--gray-light);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 999px;
+        padding: 8px 14px;
+        white-space: nowrap;
+      }
+
+      .usuario {
+        color: var(--usuario);
+      }
+      .programa {
+        color: var(--programa);
+      }
+      .programador {
+        color: var(--programador);
+      }
+
+      .hero {
+        background:
+          radial-gradient(
+            circle at 16% 20%,
+            rgba(152, 141, 179, 0.22),
+            transparent 30%
+          ),
+          radial-gradient(
+            circle at 82% 18%,
+            rgba(0, 169, 157, 0.16),
+            transparent 28%
+          ),
+          var(--white);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        text-align: center;
+        padding: 64px 20px 50px;
+      }
+
+      .hero-logo {
+        max-width: 300px;
+        width: 58%;
+        margin: 0 auto 18px;
+        display: block;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.1rem, 5vw, 4rem);
+        line-height: 1.05;
+        margin-bottom: 18px;
+        color: var(--black);
+      }
+
+      .hero p {
+        font-size: 1.18rem;
+        max-width: 760px;
+        margin: 0 auto;
+        color: #2d2d2d;
+      }
+
+      .hero strong {
+        color: var(--teal);
+      }
+
+      .container {
+        width: 92%;
+        max-width: 1180px;
+        margin: auto;
+        padding: 44px 0;
+      }
+
+      .pantalla {
+        background: var(--white);
+        border-radius: 28px;
+        padding: 34px;
+        margin-bottom: 42px;
+        box-shadow: var(--shadow);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+      }
+
+      .pantalla-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 24px;
+      }
+
+      .numero {
+        background: var(--teal);
+        color: var(--white);
+        min-width: 48px;
+        height: 48px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.35rem;
+        font-weight: 900;
+        box-shadow: 0 8px 18px rgba(0, 169, 157, 0.24);
+      }
+
+      .titulo-wrap {
+        flex: 1;
+      }
+
+      .pantalla h2 {
+        font-size: clamp(1.75rem, 3vw, 2.45rem);
+        line-height: 1.12;
+        color: var(--black);
+        margin-bottom: 8px;
+      }
+
+      .subtitulo {
+        color: var(--gray-dark);
+        font-size: 1.05rem;
+        font-weight: 650;
+      }
+
+      .contenido {
+        display: grid;
+        grid-template-columns: minmax(0, 0.84fr) minmax(0, 1.16fr);
+        gap: 30px;
+        align-items: center;
+      }
+
+      .contenido.invertido {
+        grid-template-columns: minmax(0, 1.16fr) minmax(0, 0.84fr);
+      }
+
+      .texto {
+        font-size: 1.08rem;
+        color: #222;
+      }
+
+      .texto p + p {
+        margin-top: 12px;
+      }
+
+      .idea-clave {
+        border-left: 6px solid var(--teal);
+        background: linear-gradient(
+          90deg,
+          rgba(0, 169, 157, 0.1),
+          rgba(152, 141, 179, 0.08)
+        );
+        padding: 16px 18px;
+        border-radius: 16px;
+        margin: 20px 0;
+        font-weight: 750;
+      }
+
+      .actividad {
+        margin-top: 22px;
+        background: var(--gray-light);
+        padding: 18px;
+        border-left: 6px solid var(--violet);
+        border-radius: 18px;
+      }
+
+      .actividad h3 {
+        margin-bottom: 10px;
+        color: var(--black);
+        font-size: 1.15rem;
+      }
+
+      .actividad ul,
+      .actividad ol {
+        padding-left: 1.25rem;
+        margin-top: 8px;
+      }
+
+      .actividad li {
+        margin: 0.28rem 0;
+      }
+
+      .imagen-didactica {
+        width: 100%;
+        display: block;
+        border-radius: 22px;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+        background: var(--white);
+      }
+
+      .imagen-completa {
+        margin-top: 22px;
+      }
+
+      .flujo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin: 22px 0 26px;
+        font-size: 1rem;
+        font-weight: 850;
+      }
+
+      .flujo span {
+        background: var(--white);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        padding: 12px 16px;
+        border-radius: 999px;
+        box-shadow: 0 5px 14px rgba(0, 0, 0, 0.06);
+      }
+
+      .flecha {
+        color: var(--teal);
+        font-weight: 900;
+        font-size: 1.45rem;
+      }
+
+      .cierre {
+        background: var(--black);
+        color: var(--white);
+        border-radius: 28px;
+        padding: 30px;
+        margin-top: 10px;
+        box-shadow: var(--shadow);
+      }
+
+      .cierre h2 {
+        color: var(--white);
+        margin-bottom: 10px;
+      }
+
+      .cierre p {
+        color: #f2f2f2;
+        max-width: 850px;
+      }
+
+      .footer {
+        background: var(--white);
+        text-align: center;
+        padding: 34px 20px;
+        color: var(--gray-dark);
+        font-size: 0.95rem;
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+      }
+
+      .footer img {
+        display: block;
+        margin: 0 auto 12px;
+        height: 42px;
+        width: auto;
+      }
+
+      @media (max-width: 920px) {
+        .nav {
+          flex-direction: column;
+        }
+
+        .brand {
+          justify-content: center;
+        }
+
+        .contenido,
+        .contenido.invertido {
+          grid-template-columns: 1fr;
+        }
+
+        .pantalla {
+          padding: 24px;
+        }
+
+        .pantalla-header {
+          align-items: flex-start;
+        }
+      }
+
+      @media (max-width: 560px) {
+        header {
+          padding: 12px 4%;
+        }
+
+        .brand-logo {
+          height: 38px;
+        }
+
+        .brand-text {
+          display: none;
+        }
+
+        .chip {
+          font-size: 0.86rem;
+          padding: 7px 10px;
+        }
+
+        .hero {
+          padding: 42px 16px 34px;
+        }
+
+        .pantalla {
+          border-radius: 22px;
+          padding: 20px;
+        }
+
+        .numero {
+          min-width: 42px;
+          height: 42px;
+          border-radius: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav class="nav" aria-label="Navegación principal">
+        <div class="brand">
+          <img
+            class="brand-logo"
+            src="LogoProfeMacon.png"
+            alt="Logo Profe Macón"
+          />
+          <div class="brand-text">Profe Macón</div>
+        </div>
+
+        <div class="topbar" aria-label="Roles principales">
+          <div class="chip usuario">👤 Usuario</div>
+          <div class="chip programa">💻 Programa</div>
+          <div class="chip programador">👨‍💻 Programador</div>
+        </div>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <img class="hero-logo" src="LogoProfeMacon.png" alt="Profe Macón" />
+
+      <h1>Pensar como Programador</h1>
+
+      <p>
+        Antes de escribir código, necesitamos entender el problema. En este
+        recurso vamos a mirar cómo se relacionan el <strong>usuario</strong>, el
+        <strong>programa</strong> y el <strong>programador</strong>.
+      </p>
+    </section>
+
+    <main class="container">
+      <!-- PANTALLA 1 -->
+      <section class="pantalla" id="roles">
+        <div class="pantalla-header">
+          <div class="numero">1</div>
+          <div class="titulo-wrap">
+            <h2>¿Quién participa?</h2>
+            <p class="subtitulo">
+              Tres roles distintos: quien usa, quien ejecuta y quien crea
+              instrucciones.
+            </p>
+          </div>
+        </div>
+
+        <div class="contenido">
+          <div class="texto">
+            <p>
+              <strong>El usuario</strong> usa el programa. Ingresa datos y mira
+              el resultado.
+            </p>
+            <p>
+              <strong>El programa</strong> ejecuta instrucciones. No inventa:
+              sigue pasos.
+            </p>
+            <p>
+              <strong>El programador</strong> crea las instrucciones para que el
+              programa funcione.
+            </p>
+
+            <div class="idea-clave">
+              Idea clave: el usuario entrega datos; el programador entrega
+              instrucciones; el programa ejecuta.
+            </div>
+
+            <div class="actividad">
+              <h3>Actividad para explicar en video</h3>
+              <p>
+                Mirando la imagen, explicá con tus palabras o en lengua de
+                señas:
+              </p>
+              <ul>
+                <li>¿Quién usa el programa?</li>
+                <li>¿Quién crea instrucciones?</li>
+                <li>¿Qué hace el programa?</li>
+              </ul>
+            </div>
+          </div>
+
+          <img
+            class="imagen-didactica"
+            src="imagen1.png"
+            alt="Usuario, programa y programador: roles y flujo de datos e instrucciones"
+          />
+        </div>
+      </section>
+
+      <!-- PANTALLA 2 -->
+      <section class="pantalla" id="no-adivina">
+        <div class="pantalla-header">
+          <div class="numero">2</div>
+          <div class="titulo-wrap">
+            <h2>El programa no adivina</h2>
+            <p class="subtitulo">
+              Si los datos o las instrucciones son confusos, el programa no
+              puede resolver bien.
+            </p>
+          </div>
+        </div>
+
+        <div class="contenido invertido">
+          <img
+            class="imagen-didactica"
+            src="imagen2.png"
+            alt="El programa no adivina: datos confusos e instrucciones incompletas"
+          />
+
+          <div class="texto">
+            <p>
+              Un programa no entiende intenciones. Necesita datos claros e
+              instrucciones exactas.
+            </p>
+            <p>
+              Cuando falta información, el programa no puede continuar o
+              devuelve un resultado confuso.
+            </p>
+
+            <div class="idea-clave">
+              Idea clave: programar es decirle al programa qué hacer, paso por
+              paso, sin suponer que “ya sabe”.
+            </div>
+
+            <div class="actividad">
+              <h3>Pregunta para responder</h3>
+              <p>Observá la imagen y explicá:</p>
+              <ul>
+                <li>¿Qué está confuso?</li>
+                <li>¿Qué necesita el programa para funcionar?</li>
+                <li>¿Qué debería corregir el programador?</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PANTALLA 3 -->
+      <section class="pantalla" id="entrada-salida">
+        <div class="pantalla-header">
+          <div class="numero">3</div>
+          <div class="titulo-wrap">
+            <h2>Entrada y salida</h2>
+            <p class="subtitulo">
+              Entrada es el dato que entra. Salida es el resultado que vuelve al
+              usuario.
+            </p>
+          </div>
+        </div>
+
+        <div class="flujo" aria-label="Flujo de entrada y salida">
+          <span>👤 Usuario</span>
+          <span class="flecha">➜</span>
+          <span>📥 Entrada</span>
+          <span class="flecha">➜</span>
+          <span>💻 Programa</span>
+          <span class="flecha">➜</span>
+          <span>📤 Salida</span>
+          <span class="flecha">➜</span>
+          <span>👤 Usuario</span>
+        </div>
+
+        <img
+          class="imagen-didactica imagen-completa"
+          src="imagen3.png"
+          alt="Entrada y salida: el usuario ingresa un dato, el programa procesa y devuelve un resultado"
+        />
+
+        <div class="actividad">
+          <h3>Actividad para explicar en video</h3>
+          <p>Mirando la imagen, respondé:</p>
+          <ul>
+            <li>¿Qué dato entra al programa?</li>
+            <li>¿Qué hace el programa con ese dato?</li>
+            <li>¿Qué resultado sale?</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- PANTALLA 4 -->
+      <section class="pantalla" id="pasos">
+        <div class="pantalla-header">
+          <div class="numero">4</div>
+          <div class="titulo-wrap">
+            <h2>El algoritmo: pasos ordenados</h2>
+            <p class="subtitulo">
+              Un programa funciona siguiendo instrucciones en orden.
+            </p>
+          </div>
+        </div>
+
+        <div class="contenido">
+          <div class="texto">
+            <p>
+              Un algoritmo es una secuencia de pasos para resolver un problema.
+            </p>
+            <p>
+              El orden importa: si cambiamos los pasos, el programa puede fallar
+              o mostrar algo incorrecto.
+            </p>
+
+            <div class="idea-clave">
+              Idea clave: primero se pide el dato, después se ingresa, luego se
+              guarda/procesa y al final se muestra el resultado.
+            </div>
+
+            <div class="actividad">
+              <h3>Desafío</h3>
+              <p>Explicá la historieta usando conectores de orden:</p>
+              <ol>
+                <li>Primero...</li>
+                <li>Después...</li>
+                <li>Luego...</li>
+                <li>Al final...</li>
+              </ol>
+            </div>
+          </div>
+
+          <img
+            class="imagen-didactica"
+            src="imagen4.png"
+            alt="Historieta de cinco pasos: el programador crea instrucciones, el programa pide datos, el usuario ingresa un dato, el programa procesa y muestra resultado"
+          />
+        </div>
+      </section>
+
+      <section class="cierre">
+        <h2>Para cerrar</h2>
+        <p>
+          Programar no es solo escribir código. Primero hay que entender el
+          problema, reconocer quién usa el programa, qué datos entran, qué
+          instrucciones se ejecutan y qué resultado debe mostrarse.
+        </p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <img src="logo_PM.png" alt="Logo PM" />
+      Programación I · Pensamiento Computacional · Profe Macón · 2026
+    </footer>
+  </body>
+</html>
