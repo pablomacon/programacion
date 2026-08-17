@@ -1,0 +1,1052 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mi primer programa en Java · Profe Macón</title>
+
+    <style>
+      :root {
+        --white: #ffffff;
+        --gray-light: #f4f2f5;
+        --gray: #b2acac;
+        --gray-mid: #949494;
+        --gray-dark: #827d7d;
+        --black: #000000;
+        --violet: #988db3;
+        --teal: #00a99d;
+
+        --usuario: #3b82f6;
+        --programa: #22c55e;
+        --programador: #f97316;
+        --idea: #f6c453;
+        --error: #ef4444;
+        --ok: #22c55e;
+        --shadow: 0 14px 35px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: var(--gray-light);
+        color: var(--black);
+        line-height: 1.6;
+      }
+
+      header {
+        background: rgba(255, 255, 255, 0.96);
+        color: var(--black);
+        padding: 14px 5%;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 2px 14px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(8px);
+      }
+
+      .nav {
+        max-width: 1180px;
+        margin: auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 22px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        min-width: 210px;
+      }
+
+      .brand-logo {
+        height: 46px;
+        width: auto;
+        display: block;
+      }
+
+      .brand-text {
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        color: var(--black);
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        font-weight: 800;
+        font-size: 0.95rem;
+      }
+
+      .chip {
+        background: var(--gray-light);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 999px;
+        padding: 8px 14px;
+        white-space: nowrap;
+      }
+
+      .azul { color: var(--usuario); }
+      .verde { color: var(--programa); }
+      .naranja { color: var(--programador); }
+      .teal { color: var(--teal); }
+      .violet { color: var(--violet); }
+
+      .hero {
+        background:
+          radial-gradient(circle at 16% 20%, rgba(152, 141, 179, 0.24), transparent 30%),
+          radial-gradient(circle at 82% 18%, rgba(0, 169, 157, 0.18), transparent 28%),
+          var(--white);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        text-align: center;
+        padding: 64px 20px 50px;
+      }
+
+      .hero-logo {
+        max-width: 300px;
+        width: 58%;
+        margin: 0 auto 18px;
+        display: block;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.05rem, 5vw, 3.9rem);
+        line-height: 1.05;
+        margin-bottom: 18px;
+        color: var(--black);
+      }
+
+      .hero p {
+        font-size: 1.18rem;
+        max-width: 880px;
+        margin: 0 auto;
+        color: #2d2d2d;
+      }
+
+      .hero strong {
+        color: var(--teal);
+      }
+
+      .container {
+        width: 92%;
+        max-width: 1180px;
+        margin: auto;
+        padding: 44px 0;
+      }
+
+      .intro-grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(120px, 1fr));
+        gap: 12px;
+        margin-top: 28px;
+      }
+
+      .intro-step {
+        background: var(--white);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 18px;
+        padding: 14px 12px;
+        font-weight: 850;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+      }
+
+      .pantalla {
+        background: var(--white);
+        border-radius: 28px;
+        padding: 34px;
+        margin-bottom: 42px;
+        box-shadow: var(--shadow);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+      }
+
+      .pantalla-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 24px;
+      }
+
+      .numero {
+        background: var(--teal);
+        color: var(--white);
+        min-width: 48px;
+        height: 48px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.35rem;
+        font-weight: 900;
+        box-shadow: 0 8px 18px rgba(0, 169, 157, 0.24);
+      }
+
+      .numero.violeta {
+        background: var(--violet);
+        box-shadow: 0 8px 18px rgba(152, 141, 179, 0.28);
+      }
+
+      .numero.naranja {
+        background: var(--programador);
+        box-shadow: 0 8px 18px rgba(249, 115, 22, 0.22);
+      }
+
+      .numero.verde {
+        background: var(--programa);
+        box-shadow: 0 8px 18px rgba(34, 197, 94, 0.22);
+      }
+
+      .numero.azul {
+        background: var(--usuario);
+        box-shadow: 0 8px 18px rgba(59, 130, 246, 0.22);
+      }
+
+      .titulo-wrap {
+        flex: 1;
+      }
+
+      .pantalla h2 {
+        font-size: clamp(1.75rem, 3vw, 2.45rem);
+        line-height: 1.12;
+        color: var(--black);
+        margin-bottom: 8px;
+      }
+
+      .subtitulo {
+        color: var(--gray-dark);
+        font-size: 1.05rem;
+        font-weight: 650;
+      }
+
+      .contenido {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+        gap: 30px;
+        align-items: center;
+      }
+
+      .contenido.invertido {
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      }
+
+      .texto {
+        font-size: 1.08rem;
+        color: #222;
+      }
+
+      .texto p + p {
+        margin-top: 12px;
+      }
+
+      .texto ul,
+      .texto ol {
+        padding-left: 1.25rem;
+        margin-top: 12px;
+      }
+
+      .texto li {
+        margin: 0.34rem 0;
+      }
+
+      .idea-clave {
+        border-left: 6px solid var(--teal);
+        background: linear-gradient(90deg, rgba(0, 169, 157, 0.1), rgba(152, 141, 179, 0.08));
+        padding: 16px 18px;
+        border-radius: 16px;
+        margin: 20px 0;
+        font-weight: 750;
+      }
+
+      .advertencia {
+        border-left-color: var(--programador);
+        background: linear-gradient(90deg, rgba(249, 115, 22, 0.1), rgba(246, 196, 83, 0.14));
+      }
+
+      .hacer {
+        margin-top: 20px;
+        background: linear-gradient(90deg, rgba(34, 197, 94, 0.10), rgba(0, 169, 157, 0.08));
+        padding: 18px;
+        border-left: 6px solid var(--programa);
+        border-radius: 18px;
+      }
+
+      .hacer h3,
+      .responder h3 {
+        margin-bottom: 10px;
+        color: var(--black);
+        font-size: 1.15rem;
+      }
+
+      .responder {
+        margin-top: 14px;
+        background: var(--gray-light);
+        padding: 18px;
+        border-left: 6px solid var(--violet);
+        border-radius: 18px;
+      }
+
+      .java-box {
+        background: #101828;
+        color: #f8fafc;
+        padding: 18px;
+        border-radius: 18px;
+        margin: 18px 0;
+        overflow-x: auto;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+      }
+
+      .java-box pre {
+        margin: 0;
+      }
+
+      .terminal-box {
+        background: #07111f;
+        color: #5eead4;
+        padding: 18px;
+        border-radius: 18px;
+        margin: 18px 0;
+        overflow-x: auto;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+      }
+
+      code,
+      pre {
+        font-family: Consolas, "Courier New", monospace;
+        font-size: 0.98rem;
+      }
+
+      .inline-code {
+        background: rgba(152, 141, 179, 0.18);
+        padding: 2px 7px;
+        border-radius: 7px;
+        font-family: Consolas, "Courier New", monospace;
+        font-weight: 800;
+      }
+
+      .imagen-didactica {
+        width: 100%;
+        display: block;
+        border-radius: 22px;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+        background: var(--white);
+      }
+
+      .imagen-completa {
+        margin-top: 22px;
+      }
+
+      .tarjetas {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+        gap: 14px;
+        margin: 22px 0 10px;
+      }
+
+      .tarjeta {
+        background: var(--gray-light);
+        border-radius: 18px;
+        padding: 18px;
+        border: 1px solid rgba(0, 0, 0, 0.06);
+      }
+
+      .tarjeta strong {
+        display: block;
+        margin-bottom: 6px;
+      }
+
+      .tarjeta.azul-borde { border-left: 6px solid var(--usuario); }
+      .tarjeta.teal-borde { border-left: 6px solid var(--teal); }
+      .tarjeta.naranja-borde { border-left: 6px solid var(--programador); }
+      .tarjeta.violeta-borde { border-left: 6px solid var(--violet); }
+
+      .tabla-partes {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 18px 0;
+        overflow: hidden;
+        border-radius: 16px;
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.07);
+      }
+
+      .tabla-partes th,
+      .tabla-partes td {
+        padding: 12px 14px;
+        text-align: left;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+        vertical-align: top;
+      }
+
+      .tabla-partes th {
+        background: var(--gray-light);
+        font-weight: 900;
+      }
+
+      .tabla-partes tr:last-child td {
+        border-bottom: none;
+      }
+
+      .cierre {
+        background: var(--black);
+        color: var(--white);
+        border-radius: 28px;
+        padding: 30px;
+        margin-top: 10px;
+        box-shadow: var(--shadow);
+      }
+
+      .cierre h2 {
+        color: var(--white);
+        margin-bottom: 10px;
+      }
+
+      .cierre p {
+        color: #f2f2f2;
+        max-width: 900px;
+      }
+
+      .checklist {
+        margin-top: 20px;
+        display: grid;
+        gap: 10px;
+      }
+
+      .check {
+        background: rgba(255, 255, 255, 0.09);
+        padding: 10px 12px;
+        border-radius: 12px;
+      }
+
+      .footer {
+        background: var(--white);
+        text-align: center;
+        padding: 34px 20px;
+        color: var(--gray-dark);
+        font-size: 0.95rem;
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+      }
+
+      .footer img {
+        display: block;
+        margin: 0 auto 12px;
+        height: 42px;
+        width: auto;
+      }
+
+      @media (max-width: 920px) {
+        .nav {
+          flex-direction: column;
+        }
+
+        .brand {
+          justify-content: center;
+        }
+
+        .contenido,
+        .contenido.invertido {
+          grid-template-columns: 1fr;
+        }
+
+        .pantalla {
+          padding: 24px;
+        }
+
+        .intro-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 560px) {
+        header {
+          padding: 12px 4%;
+        }
+
+        .brand-logo {
+          height: 38px;
+        }
+
+        .brand-text {
+          display: none;
+        }
+
+        .chip {
+          font-size: 0.86rem;
+          padding: 7px 10px;
+        }
+
+        .hero {
+          padding: 42px 16px 34px;
+        }
+
+        .pantalla {
+          border-radius: 22px;
+          padding: 20px;
+        }
+
+        .numero {
+          min-width: 42px;
+          height: 42px;
+          border-radius: 14px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <nav class="nav" aria-label="Navegación principal">
+        <div class="brand">
+          <img class="brand-logo" src="LogoProfeMacon.png" alt="Logo Profe Macón" />
+          <div class="brand-text">Profe Macón</div>
+        </div>
+
+        <div class="topbar" aria-label="Ideas centrales de la actividad">
+          <div class="chip naranja">☕ Java</div>
+          <div class="chip teal">📁 proyecto</div>
+          <div class="chip azul">▶ ejecutar</div>
+        </div>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <img class="hero-logo" src="LogoProfeMacon.png" alt="Profe Macón" />
+
+      <h1>Mi primer programa en Java</h1>
+
+      <p>
+        Ahora vas a trabajar como <strong>programador</strong>. Vas a crear una carpeta,
+        abrirla en VS Code, escribir tu primer archivo <span class="inline-code">Main.java</span>
+        y ejecutar un programa que muestra un mensaje en pantalla.
+      </p>
+
+      <div class="intro-grid" aria-label="Recorrido de la actividad">
+        <div class="intro-step">1. Crear carpeta</div>
+        <div class="intro-step">2. Abrir en VS Code</div>
+        <div class="intro-step">3. Crear Main.java</div>
+        <div class="intro-step">4. Escribir código</div>
+        <div class="intro-step">5. Ejecutar y probar</div>
+      </div>
+    </section>
+
+    <main class="container">
+      <!-- PANTALLA 1 -->
+      <section class="pantalla" id="crear-carpeta">
+        <div class="pantalla-header">
+          <div class="numero teal">1</div>
+          <div class="titulo-wrap">
+            <h2>Crear una carpeta para el proyecto</h2>
+            <p class="subtitulo">
+              Un proyecto de Java empieza ordenado: primero creamos una carpeta.
+            </p>
+          </div>
+        </div>
+
+        <div class="contenido">
+          <div class="texto">
+            <p>
+              Un proyecto simple de Java puede estar dentro de una carpeta. Esa carpeta
+              guarda los archivos que vamos a usar.
+            </p>
+
+            <p>
+              Para esta actividad, la carpeta se va a llamar
+              <span class="inline-code">actividad_4_hola_mundo</span>.
+            </p>
+
+            <div class="idea-clave">
+              Idea clave: trabajar en una carpeta evita perder archivos y ayuda a encontrar el programa después.
+            </div>
+
+            <div class="hacer">
+              <h3>Hacé ahora</h3>
+              <p>Creá una carpeta con el nombre <span class="inline-code">actividad_4_hola_mundo</span>.</p>
+            </div>
+
+            <div class="responder">
+              <h3>Respondé</h3>
+              <ol>
+                <li>¿Cómo se llama la carpeta del proyecto?</li>
+                <li>¿Para qué sirve la carpeta?</li>
+              </ol>
+            </div>
+          </div>
+
+          <img class="imagen-didactica" src="img-1.png" alt="Crear una carpeta de proyecto Java llamada actividad_4_hola_mundo" />
+        </div>
+      </section>
+
+      <!-- PANTALLA 2 -->
+      <section class="pantalla" id="abrir-carpeta">
+        <div class="pantalla-header">
+          <div class="numero violeta">2</div>
+          <div class="titulo-wrap">
+            <h2>Abrir la carpeta en VS Code</h2>
+            <p class="subtitulo">
+              VS Code trabaja mejor cuando abrimos la carpeta completa del proyecto.
+            </p>
+          </div>
+        </div>
+
+        <div class="contenido invertido">
+          <img class="imagen-didactica" src="img-2.png" alt="VS Code con la carpeta actividad_4_hola_mundo abierta en el explorador" />
+
+          <div class="texto">
+            <p>
+              Abrí Visual Studio Code. Después abrí la carpeta
+              <span class="inline-code">actividad_4_hola_mundo</span>.
+            </p>
+
+            <p>
+              Cuando la carpeta está abierta, su nombre aparece a la izquierda, en el
+              explorador de archivos.
+            </p>
+
+            <div class="idea-clave">
+              El explorador de VS Code muestra las carpetas y archivos de tu proyecto.
+            </div>
+
+            <div class="hacer">
+              <h3>Hacé ahora</h3>
+              <p>Abrí la carpeta del proyecto en VS Code.</p>
+            </div>
+
+            <div class="responder">
+              <h3>Respondé</h3>
+              <ol>
+                <li>¿Qué nombre aparece en el explorador de VS Code?</li>
+                <li>¿La carpeta está vacía o ya tiene archivos?</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PANTALLA 3 -->
+      <section class="pantalla" id="crear-main">
+        <div class="pantalla-header">
+          <div class="numero naranja">3</div>
+          <div class="titulo-wrap">
+            <h2>Crear el archivo Main.java</h2>
+            <p class="subtitulo">
+              El primer archivo Java de este proyecto se va a llamar exactamente Main.java.
+            </p>
+          </div>
+        </div>
+
+        <div class="contenido">
+          <div class="texto">
+            <p>
+              Dentro de la carpeta del proyecto, creá un archivo llamado
+              <span class="inline-code">Main.java</span>.
+            </p>
+
+            <p>
+              La palabra <span class="inline-code">Main</span> empieza con mayúscula.
+              La parte <span class="inline-code">.java</span> indica que es un archivo de Java.
+            </p>
+
+            <div class="tarjetas">
+              <div class="tarjeta violeta-borde">
+                <strong><span class="inline-code">Main</span></strong>
+                Es el nombre del archivo y también será el nombre de la clase.
+              </div>
+              <div class="tarjeta teal-borde">
+                <strong><span class="inline-code">.java</span></strong>
+                Indica que el archivo contiene código Java.
+              </div>
+            </div>
+
+            <div class="idea-clave advertencia">
+              En Java los nombres importan. Para este primer programa, escribí exactamente: <span class="inline-code">Main.java</span>.
+            </div>
+
+            <div class="hacer">
+              <h3>Hacé ahora</h3>
+              <p>Creá el archivo <span class="inline-code">Main.java</span> dentro de la carpeta.</p>
+            </div>
+
+            <div class="responder">
+              <h3>Respondé</h3>
+              <ol>
+                <li>¿Cómo se llama el archivo?</li>
+                <li>¿Qué parte del nombre indica que es Java?</li>
+                <li>¿Con qué letra empieza <span class="inline-code">Main</span>?</li>
+              </ol>
+            </div>
+          </div>
+
+          <img class="imagen-didactica" src="img-3.png" alt="Crear el archivo Main.java en el explorador de VS Code" />
+        </div>
+      </section>
+
+      <!-- PANTALLA 4 -->
+      <section class="pantalla" id="estructura-basica">
+        <div class="pantalla-header">
+          <div class="numero verde">4</div>
+          <div class="titulo-wrap">
+            <h2>Escribir la estructura básica</h2>
+            <p class="subtitulo">
+              Java necesita una estructura para saber dónde empieza el programa.
+            </p>
+          </div>
+        </div>
+
+        <div class="contenido invertido">
+          <img class="imagen-didactica" src="img-4.png" alt="Estructura básica de un programa Java con class Main y main" />
+
+          <div class="texto">
+            <p>Copiá esta estructura dentro del archivo <span class="inline-code">Main.java</span>:</p>
+
+            <div class="java-box" aria-label="Estructura básica de un programa Java">
+<pre><code>public class Main {
+    public static void main(String[] args) {
+
+    }
+}</code></pre>
+            </div>
+
+            <p>
+              En esta estructura, <span class="inline-code">class Main</span> indica la clase principal.
+              La palabra <span class="inline-code">main</span> marca el lugar donde empieza el programa.
+            </p>
+
+            <p>
+              Las llaves <span class="inline-code">{ }</span> marcan bloques. Un bloque indica dónde empiezan
+              y dónde terminan las instrucciones.
+            </p>
+
+            <div class="idea-clave">
+              Idea clave: el programa empieza dentro de <span class="inline-code">main</span>.
+            </div>
+
+            <div class="hacer">
+              <h3>Hacé ahora</h3>
+              <p>Copiá la estructura básica en <span class="inline-code">Main.java</span>.</p>
+            </div>
+
+            <div class="responder">
+              <h3>Respondé</h3>
+              <ol>
+                <li>¿Cómo se llama la clase?</li>
+                <li>¿Dónde empieza el programa?</li>
+                <li>¿Qué símbolos marcan el inicio y el final de un bloque?</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PANTALLA 5 -->
+      <section class="pantalla" id="println">
+        <div class="pantalla-header">
+          <div class="numero azul">5</div>
+          <div class="titulo-wrap">
+            <h2>Mostrar un mensaje con println</h2>
+            <p class="subtitulo">
+              La instrucción System.out.println muestra texto en pantalla.
+            </p>
+          </div>
+        </div>
+
+        <div class="contenido">
+          <div class="texto">
+            <p>
+              Ahora vamos a escribir una instrucción dentro de <span class="inline-code">main</span>.
+              La instrucción será:
+            </p>
+
+            <div class="java-box" aria-label="Instrucción System.out.println Hola Mundo">
+<pre><code>System.out.println("Hola Mundo");</code></pre>
+            </div>
+
+            <p>
+              El texto <span class="inline-code">"Hola Mundo"</span> va entre comillas porque es un mensaje.
+              El punto y coma <span class="inline-code">;</span> indica que la instrucción terminó.
+            </p>
+
+            <div class="java-box" aria-label="Programa completo Hola Mundo">
+<pre><code>public class Main {
+    public static void main(String[] args) {
+        System.out.println("Hola Mundo");
+    }
+}</code></pre>
+            </div>
+
+            <div class="idea-clave">
+              Lo que escribimos entre comillas es lo que verá el usuario en la pantalla.
+            </div>
+
+            <div class="hacer">
+              <h3>Hacé ahora</h3>
+              <p>Agregá <span class="inline-code">System.out.println("Hola Mundo");</span> dentro de <span class="inline-code">main</span>.</p>
+            </div>
+
+            <div class="responder">
+              <h3>Respondé</h3>
+              <ol>
+                <li>¿Qué mensaje va a mostrar el programa?</li>
+                <li>¿Por qué el mensaje está entre comillas?</li>
+                <li>¿Con qué símbolo termina la instrucción?</li>
+              </ol>
+            </div>
+          </div>
+
+          <img class="imagen-didactica" src="img-5.png" alt="System.out.println muestra el mensaje Hola Mundo en pantalla" />
+        </div>
+      </section>
+
+      <!-- PANTALLA 6 -->
+      <section class="pantalla" id="ejecutar">
+        <div class="pantalla-header">
+          <div class="numero verde">6</div>
+          <div class="titulo-wrap">
+            <h2>Ejecutar el programa</h2>
+            <p class="subtitulo">
+              Ejecutar significa decirle al programa que empiece a funcionar.
+            </p>
+          </div>
+        </div>
+
+        <div class="contenido invertido">
+          <img class="imagen-didactica" src="img-6.png" alt="Ejecutar un programa Java en VS Code con el botón Run y salida Hola Mundo" />
+
+          <div class="texto">
+            <p>
+              En VS Code puede aparecer un botón verde llamado <span class="inline-code">Run</span>
+              o una opción llamada <span class="inline-code">Run Java</span>.
+            </p>
+
+            <p>
+              Al ejecutar el programa, se abre una consola simple y aparece el resultado.
+            </p>
+
+            <div class="terminal-box" aria-label="Salida esperada en consola">
+<pre><code>Hola Mundo</code></pre>
+            </div>
+
+            <div class="idea-clave">
+              Ejecutar sirve para comprobar si el programa hace lo que esperamos.
+            </div>
+
+            <div class="hacer">
+              <h3>Hacé ahora</h3>
+              <p>Ejecutá el programa y mirá la salida.</p>
+            </div>
+
+            <div class="responder">
+              <h3>Respondé</h3>
+              <ol>
+                <li>¿Qué apareció en pantalla?</li>
+                <li>¿Coincide con el mensaje que escribiste?</li>
+                <li>Si no apareció, ¿qué revisarías primero?</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PANTALLA 7 -->
+      <section class="pantalla" id="cambiar-probar">
+        <div class="pantalla-header">
+          <div class="numero violeta">7</div>
+          <div class="titulo-wrap">
+            <h2>Cambiar el mensaje y volver a probar</h2>
+            <p class="subtitulo">
+              Si cambiamos la instrucción, también cambia la salida del programa.
+            </p>
+          </div>
+        </div>
+
+        <div class="contenido">
+          <div class="texto">
+            <p>Probá cambiar el mensaje original por uno nuevo:</p>
+
+            <div class="java-box" aria-label="Nuevo mensaje con System.out.println">
+<pre><code>System.out.println("Estoy aprendiendo Java");</code></pre>
+            </div>
+
+            <p>
+              Después de cambiar el mensaje, ejecutá otra vez. El programa debe mostrar
+              el texto nuevo.
+            </p>
+
+            <div class="terminal-box" aria-label="Nueva salida en consola">
+<pre><code>Estoy aprendiendo Java</code></pre>
+            </div>
+
+            <div class="idea-clave">
+              Cambiar y probar ayuda a comprobar que entendemos qué parte del código produce la salida.
+            </div>
+
+            <div class="hacer">
+              <h3>Hacé ahora</h3>
+              <p>Cambiá el mensaje, ejecutá otra vez y mirá qué aparece.</p>
+            </div>
+
+            <div class="responder">
+              <h3>Respondé</h3>
+              <ol>
+                <li>¿Qué mensaje escribiste?</li>
+                <li>¿Qué apareció en pantalla?</li>
+                <li>¿Qué parte del código cambiaste?</li>
+              </ol>
+            </div>
+          </div>
+
+          <img class="imagen-didactica" src="img-7.png" alt="Cambiar el mensaje de Hola Mundo a Estoy aprendiendo Java y volver a probar" />
+        </div>
+      </section>
+
+      <!-- PANTALLA 8 -->
+      <section class="pantalla" id="pasos-orden">
+        <div class="pantalla-header">
+          <div class="numero naranja">8</div>
+          <div class="titulo-wrap">
+            <h2>Dos instrucciones en orden</h2>
+            <p class="subtitulo">
+              Java ejecuta las instrucciones de arriba hacia abajo.
+            </p>
+          </div>
+        </div>
+
+        <div class="contenido invertido">
+          <img class="imagen-didactica" src="img-8.png" alt="Dos instrucciones println se ejecutan de arriba hacia abajo y producen dos líneas de salida" />
+
+          <div class="texto">
+            <p>
+              Un programa puede tener más de una instrucción. En este ejemplo hay dos instrucciones
+              <span class="inline-code">System.out.println</span>.
+            </p>
+
+            <div class="java-box" aria-label="Dos instrucciones println en orden">
+<pre><code>public class Main {
+    public static void main(String[] args) {
+        System.out.println("Hola Mundo");
+        System.out.println("Estoy aprendiendo Java");
+    }
+}</code></pre>
+            </div>
+
+            <p>La salida aparece en el mismo orden en que escribimos las instrucciones:</p>
+
+            <div class="terminal-box" aria-label="Salida con dos líneas">
+<pre><code>Hola Mundo
+Estoy aprendiendo Java</code></pre>
+            </div>
+
+            <div class="idea-clave advertencia">
+              El orden importa: si cambiamos el orden de las instrucciones, cambia el orden del resultado.
+            </div>
+
+            <div class="hacer">
+              <h3>Hacé ahora</h3>
+              <p>Agregá dos instrucciones <span class="inline-code">System.out.println</span> y ejecutá el programa.</p>
+            </div>
+
+            <div class="responder">
+              <h3>Respondé</h3>
+              <ol>
+                <li>¿Qué mensaje aparece primero?</li>
+                <li>¿Qué mensaje aparece después?</li>
+                <li>¿Por qué importa el orden de las instrucciones?</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PANTALLA 9 -->
+      <section class="pantalla" id="errores">
+        <div class="pantalla-header">
+          <div class="numero violeta">9</div>
+          <div class="titulo-wrap">
+            <h2>Revisar errores comunes</h2>
+            <p class="subtitulo">
+              En Java, los detalles pequeños pueden cambiar todo.
+            </p>
+          </div>
+        </div>
+
+        <div class="texto">
+          <p>
+            Si el programa no ejecuta, no significa que “está todo mal”. Muchas veces falta
+            una comilla, una llave, una mayúscula o un punto y coma.
+          </p>
+
+          <div class="tarjetas">
+            <div class="tarjeta naranja-borde">
+              <strong>Falta una comilla</strong>
+              <div class="java-box"><pre><code>System.out.println("Hola Mundo);</code></pre></div>
+              <p>El texto debe abrir y cerrar comillas.</p>
+            </div>
+
+            <div class="tarjeta teal-borde">
+              <strong>Falta el punto y coma</strong>
+              <div class="java-box"><pre><code>System.out.println("Hola Mundo")</code></pre></div>
+              <p>La instrucción debe terminar con <span class="inline-code">;</span>.</p>
+            </div>
+
+            <div class="tarjeta violeta-borde">
+              <strong>Mayúscula incorrecta</strong>
+              <div class="java-box"><pre><code>System.out.Println("Hola Mundo");</code></pre></div>
+              <p>En Java, <span class="inline-code">println</span> va con minúscula.</p>
+            </div>
+          </div>
+
+          <div class="idea-clave">
+            Revisar también es programar. El error ayuda a encontrar qué parte debemos corregir.
+          </div>
+
+          <div class="hacer">
+            <h3>Hacé ahora</h3>
+            <p>Revisá tu código antes de entregar.</p>
+          </div>
+
+          <div class="responder">
+            <h3>Respondé</h3>
+            <ol>
+              <li>¿Tu mensaje tiene comillas al inicio y al final?</li>
+              <li>¿La instrucción termina con <span class="inline-code">;</span>?</li>
+              <li>¿Escribiste <span class="inline-code">println</span> con minúscula?</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <section class="cierre">
+        <h2>Para cerrar</h2>
+        <p>
+          Hoy creaste tu primer programa en Java. Aprendiste a organizar un proyecto,
+          crear el archivo <span class="inline-code">Main.java</span>, escribir la estructura básica,
+          mostrar mensajes con <span class="inline-code">System.out.println</span> y ejecutar para mirar la salida.
+        </p>
+
+        <div class="checklist" aria-label="Checklist final">
+          <div class="check">✅ Creé la carpeta del proyecto.</div>
+          <div class="check">✅ Abrí la carpeta en VS Code.</div>
+          <div class="check">✅ Creé el archivo Main.java.</div>
+          <div class="check">✅ Escribí y ejecuté Hola Mundo.</div>
+          <div class="check">✅ Cambié el mensaje y volví a probar.</div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <img src="logo_PM.png" alt="Logo PM" />
+      Programación I · Mi primer programa en Java · Profe Macón · 2026
+    </footer>
+  </body>
+</html>

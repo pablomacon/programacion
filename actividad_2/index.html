@@ -1,0 +1,913 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resolver problemas como programador · Profe Macón</title>
+
+    <style>
+      :root {
+        --white: #ffffff;
+        --gray-light: #f4f2f5;
+        --gray: #b2acac;
+        --gray-mid: #949494;
+        --gray-dark: #827d7d;
+        --black: #000000;
+        --violet: #988db3;
+        --teal: #00a99d;
+
+        --usuario: #3b82f6;
+        --programa: #22c55e;
+        --programador: #f97316;
+        --idea: #f6c453;
+        --shadow: 0 14px 35px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: var(--gray-light);
+        color: var(--black);
+        line-height: 1.6;
+      }
+
+      header {
+        background: rgba(255, 255, 255, 0.96);
+        color: var(--black);
+        padding: 14px 5%;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 2px 14px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(8px);
+      }
+
+      .nav {
+        max-width: 1180px;
+        margin: auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 22px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        min-width: 210px;
+      }
+
+      .brand-logo {
+        height: 46px;
+        width: auto;
+        display: block;
+      }
+
+      .brand-text {
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        color: var(--black);
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        font-weight: 800;
+        font-size: 0.95rem;
+      }
+
+      .chip {
+        background: var(--gray-light);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 999px;
+        padding: 8px 14px;
+        white-space: nowrap;
+      }
+
+      .programador {
+        color: var(--programador);
+      }
+
+      .teal {
+        color: var(--teal);
+      }
+
+      .violet {
+        color: var(--violet);
+      }
+
+      .hero {
+        background:
+          radial-gradient(
+            circle at 16% 20%,
+            rgba(152, 141, 179, 0.24),
+            transparent 30%
+          ),
+          radial-gradient(
+            circle at 82% 18%,
+            rgba(0, 169, 157, 0.18),
+            transparent 28%
+          ),
+          var(--white);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        text-align: center;
+        padding: 64px 20px 50px;
+      }
+
+      .hero-logo {
+        max-width: 300px;
+        width: 58%;
+        margin: 0 auto 18px;
+        display: block;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.05rem, 5vw, 3.9rem);
+        line-height: 1.05;
+        margin-bottom: 18px;
+        color: var(--black);
+      }
+
+      .hero p {
+        font-size: 1.18rem;
+        max-width: 820px;
+        margin: 0 auto;
+        color: #2d2d2d;
+      }
+
+      .hero strong {
+        color: var(--teal);
+      }
+
+      .container {
+        width: 92%;
+        max-width: 1180px;
+        margin: auto;
+        padding: 44px 0;
+      }
+
+      .intro-grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(120px, 1fr));
+        gap: 12px;
+        margin-top: 28px;
+      }
+
+      .intro-step {
+        background: var(--white);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 18px;
+        padding: 14px 12px;
+        font-weight: 850;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+      }
+
+      .pantalla {
+        background: var(--white);
+        border-radius: 28px;
+        padding: 34px;
+        margin-bottom: 42px;
+        box-shadow: var(--shadow);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+      }
+
+      .pantalla-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 24px;
+      }
+
+      .numero {
+        background: var(--teal);
+        color: var(--white);
+        min-width: 48px;
+        height: 48px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.35rem;
+        font-weight: 900;
+        box-shadow: 0 8px 18px rgba(0, 169, 157, 0.24);
+      }
+
+      .numero.violeta {
+        background: var(--violet);
+        box-shadow: 0 8px 18px rgba(152, 141, 179, 0.28);
+      }
+
+      .numero.naranja {
+        background: var(--programador);
+        box-shadow: 0 8px 18px rgba(249, 115, 22, 0.22);
+      }
+
+      .numero.verde {
+        background: var(--programa);
+        box-shadow: 0 8px 18px rgba(34, 197, 94, 0.22);
+      }
+
+      .titulo-wrap {
+        flex: 1;
+      }
+
+      .pantalla h2 {
+        font-size: clamp(1.75rem, 3vw, 2.45rem);
+        line-height: 1.12;
+        color: var(--black);
+        margin-bottom: 8px;
+      }
+
+      .subtitulo {
+        color: var(--gray-dark);
+        font-size: 1.05rem;
+        font-weight: 650;
+      }
+
+      .contenido {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+        gap: 30px;
+        align-items: center;
+      }
+
+      .contenido.invertido {
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      }
+
+      .texto {
+        font-size: 1.08rem;
+        color: #222;
+      }
+
+      .texto p + p {
+        margin-top: 12px;
+      }
+
+      .texto ul,
+      .texto ol {
+        padding-left: 1.25rem;
+        margin-top: 12px;
+      }
+
+      .texto li {
+        margin: 0.34rem 0;
+      }
+
+      .idea-clave {
+        border-left: 6px solid var(--teal);
+        background: linear-gradient(
+          90deg,
+          rgba(0, 169, 157, 0.1),
+          rgba(152, 141, 179, 0.08)
+        );
+        padding: 16px 18px;
+        border-radius: 16px;
+        margin: 20px 0;
+        font-weight: 750;
+      }
+
+      .advertencia {
+        border-left-color: var(--programador);
+        background: linear-gradient(
+          90deg,
+          rgba(249, 115, 22, 0.1),
+          rgba(246, 196, 83, 0.14)
+        );
+      }
+
+      .actividad {
+        margin-top: 22px;
+        background: var(--gray-light);
+        padding: 18px;
+        border-left: 6px solid var(--violet);
+        border-radius: 18px;
+      }
+
+      .actividad h3 {
+        margin-bottom: 10px;
+        color: var(--black);
+        font-size: 1.15rem;
+      }
+
+      .actividad ul,
+      .actividad ol {
+        padding-left: 1.25rem;
+        margin-top: 8px;
+      }
+
+      .actividad li {
+        margin: 0.28rem 0;
+      }
+
+      .imagen-didactica {
+        width: 100%;
+        display: block;
+        border-radius: 22px;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+        background: var(--white);
+      }
+
+      .imagen-completa {
+        margin-top: 22px;
+      }
+
+      .tarjetas {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+        gap: 14px;
+        margin: 22px 0 10px;
+      }
+
+      .tarjeta {
+        background: var(--gray-light);
+        border-radius: 18px;
+        padding: 18px;
+        border: 1px solid rgba(0, 0, 0, 0.06);
+      }
+
+      .tarjeta strong {
+        display: block;
+        margin-bottom: 6px;
+      }
+
+      .flujo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin: 22px 0 26px;
+        font-size: 1rem;
+        font-weight: 850;
+      }
+
+      .flujo span {
+        background: var(--white);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        padding: 12px 16px;
+        border-radius: 999px;
+        box-shadow: 0 5px 14px rgba(0, 0, 0, 0.06);
+      }
+
+      .flecha {
+        color: var(--teal);
+        font-weight: 900;
+        font-size: 1.45rem;
+      }
+
+      .evaluacion {
+        background: var(--white);
+        border-radius: 28px;
+        padding: 34px;
+        margin-bottom: 42px;
+        box-shadow: var(--shadow);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      .evaluacion h2 {
+        font-size: clamp(1.8rem, 3vw, 2.5rem);
+        margin-bottom: 10px;
+      }
+
+      .pregunta {
+        padding: 18px;
+        margin-top: 16px;
+        background: var(--gray-light);
+        border-radius: 18px;
+        border-left: 6px solid var(--teal);
+      }
+
+      .pregunta h3 {
+        margin-bottom: 8px;
+        font-size: 1.08rem;
+      }
+
+      .respuesta-guia {
+        color: var(--gray-dark);
+        font-size: 0.98rem;
+        margin-top: 8px;
+      }
+
+      .cierre {
+        background: var(--black);
+        color: var(--white);
+        border-radius: 28px;
+        padding: 30px;
+        margin-top: 10px;
+        box-shadow: var(--shadow);
+      }
+
+      .cierre h2 {
+        color: var(--white);
+        margin-bottom: 10px;
+      }
+
+      .cierre p {
+        color: #f2f2f2;
+        max-width: 900px;
+      }
+
+      .footer {
+        background: var(--white);
+        text-align: center;
+        padding: 34px 20px;
+        color: var(--gray-dark);
+        font-size: 0.95rem;
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+      }
+
+      .footer img {
+        display: block;
+        margin: 0 auto 12px;
+        height: 42px;
+        width: auto;
+      }
+
+      @media (max-width: 920px) {
+        .nav {
+          flex-direction: column;
+        }
+
+        .brand {
+          justify-content: center;
+        }
+
+        .contenido,
+        .contenido.invertido {
+          grid-template-columns: 1fr;
+        }
+
+        .pantalla,
+        .evaluacion {
+          padding: 24px;
+        }
+
+        .intro-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 560px) {
+        header {
+          padding: 12px 4%;
+        }
+
+        .brand-logo {
+          height: 38px;
+        }
+
+        .brand-text {
+          display: none;
+        }
+
+        .chip {
+          font-size: 0.86rem;
+          padding: 7px 10px;
+        }
+
+        .hero {
+          padding: 42px 16px 34px;
+        }
+
+        .pantalla,
+        .evaluacion {
+          border-radius: 22px;
+          padding: 20px;
+        }
+
+        .numero {
+          min-width: 42px;
+          height: 42px;
+          border-radius: 14px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <nav class="nav" aria-label="Navegación principal">
+        <div class="brand">
+          <img
+            class="brand-logo"
+            src="LogoProfeMacon.png"
+            alt="Logo Profe Macón"
+          />
+          <div class="brand-text">Profe Macón</div>
+        </div>
+
+        <div class="topbar" aria-label="Proceso de resolución">
+          <div class="chip programador">👨‍💻 Rol: programador</div>
+          <div class="chip teal">🔁 Probar y mejorar</div>
+          <div class="chip violet">🌀 Espiral</div>
+        </div>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <img class="hero-logo" src="LogoProfeMacon.png" alt="Profe Macón" />
+
+      <h1>Resolver problemas como programador</h1>
+
+      <p>
+        En la actividad anterior vimos los roles. Ahora vamos a trabajar desde el
+        rol del <strong>programador</strong>: entender un problema, analizarlo,
+        proponer una solución, probarla y mejorarla.
+      </p>
+
+      <div class="intro-grid" aria-label="Pasos del proceso">
+        <div class="intro-step">1. Entender</div>
+        <div class="intro-step">2. Analizar</div>
+        <div class="intro-step">3. Proponer</div>
+        <div class="intro-step">4. Probar</div>
+        <div class="intro-step">5. Mejorar</div>
+      </div>
+    </section>
+
+    <main class="container">
+      <!-- PANTALLA 1 -->
+      <section class="pantalla" id="rol-programador">
+        <div class="pantalla-header">
+          <div class="numero naranja">1</div>
+          <div class="titulo-wrap">
+            <h2>Ahora estoy en el rol del programador</h2>
+            <p class="subtitulo">
+              Ya no miro solo como usuario. Ahora pienso cómo resolver el problema.
+            </p>
+          </div>
+        </div>
+
+        <div class="contenido">
+          <div class="texto">
+            <p>
+              El usuario usa el programa. Pero el programador debe pensar antes:
+              ¿qué tiene que hacer el programa para ayudar al usuario?
+            </p>
+            <p>
+              Antes de escribir código, el programador mira la consigna, reconoce
+              los datos y piensa una solución posible.
+            </p>
+
+            <div class="idea-clave advertencia">
+              Idea clave: programar empieza antes de Java. Empieza cuando entiendo
+              qué problema tengo que resolver.
+            </div>
+
+            <div class="actividad">
+              <h3>Para mirar la imagen</h3>
+              <ul>
+                <li>¿Dónde aparece el usuario?</li>
+                <li>¿Dónde aparece el programa?</li>
+                <li>¿Qué está pensando el programador?</li>
+              </ul>
+            </div>
+          </div>
+
+          <img
+            class="imagen-didactica"
+            src="imagen1.png"
+            alt="Rol del programador: pensar la solución antes de programar"
+          />
+        </div>
+      </section>
+
+      <!-- PANTALLA 2 -->
+      <section class="pantalla" id="entender">
+        <div class="pantalla-header">
+          <div class="numero violeta">2</div>
+          <div class="titulo-wrap">
+            <h2>Entender el problema</h2>
+            <p class="subtitulo">
+              El primer paso es poder decir con claridad qué me piden.
+            </p>
+          </div>
+        </div>
+
+        <div class="contenido invertido">
+          <img
+            class="imagen-didactica"
+            src="imagen2.png"
+            alt="Entender el problema: leer la consigna y explicar qué pide"
+          />
+
+          <div class="texto">
+            <p>
+              Entender el problema significa leer la consigna y explicarla con
+              palabras propias.
+            </p>
+            <p>
+              No alcanza con repetir la consigna. Hay que decir qué debe hacer el
+              programa y para qué sirve.
+            </p>
+
+            <div class="tarjetas">
+              <div class="tarjeta">
+                <strong>¿Qué me piden?</strong>
+                Identifico la tarea principal.
+              </div>
+              <div class="tarjeta">
+                <strong>¿Qué datos necesito?</strong>
+                Pienso qué debe ingresar el usuario.
+              </div>
+              <div class="tarjeta">
+                <strong>¿Qué resultado debe salir?</strong>
+                Pienso qué debe mostrar el programa.
+              </div>
+            </div>
+
+            <div class="idea-clave">
+              Idea clave: si no entiendo el problema, el código no me va a salvar.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PANTALLA 3 -->
+      <section class="pantalla" id="analizar">
+        <div class="pantalla-header">
+          <div class="numero">3</div>
+          <div class="titulo-wrap">
+            <h2>Analizar: datos, resultado y patrones</h2>
+            <p class="subtitulo">
+              Analizar es mirar las partes del problema y buscar problemas parecidos.
+            </p>
+          </div>
+        </div>
+
+        <div class="contenido">
+          <div class="texto">
+            <p>
+              Después de entender la consigna, el programador analiza. Mira qué
+              entra, qué proceso se necesita y qué resultado debe salir.
+            </p>
+            <p>
+              También busca patrones: tal vez el problema se parece a otro que ya
+              resolvimos antes.
+            </p>
+
+            <div class="flujo" aria-label="Flujo de análisis">
+              <span>📥 Datos</span>
+              <span class="flecha">➜</span>
+              <span>⚙ Proceso</span>
+              <span class="flecha">➜</span>
+              <span>📤 Resultado</span>
+            </div>
+
+            <div class="idea-clave">
+              Idea clave: reconocer un patrón ayuda a no empezar desde cero.
+            </div>
+
+            <div class="actividad">
+              <h3>Ejemplo</h3>
+              <p>
+                Si el problema dice “pedir dos números y mostrar la suma”, el
+                patrón puede ser: <strong>entrada + operación + salida</strong>.
+              </p>
+            </div>
+          </div>
+
+          <img
+            class="imagen-didactica"
+            src="imagen3.png"
+            alt="Analizar: reconocer datos, proceso, resultado y patrones"
+          />
+        </div>
+      </section>
+
+      <!-- PANTALLA 4 -->
+      <section class="pantalla" id="proponer">
+        <div class="pantalla-header">
+          <div class="numero naranja">4</div>
+          <div class="titulo-wrap">
+            <h2>Proponer una solución</h2>
+            <p class="subtitulo">
+              Antes de programar, ordeno los pasos de la solución.
+            </p>
+          </div>
+        </div>
+
+        <div class="contenido invertido">
+          <img
+            class="imagen-didactica"
+            src="imagen4.png"
+            alt="Proponer una solución: ordenar pasos antes de escribir código"
+          />
+
+          <div class="texto">
+            <p>
+              Proponer una solución significa pensar una forma posible de resolver
+              el problema.
+            </p>
+            <p>
+              En programación, eso se puede hacer con pasos simples, dibujos o
+              pseudocódigo. Todavía no necesito escribir Java perfecto.
+            </p>
+
+            <div class="idea-clave advertencia">
+              Idea clave: si los pasos están claros, después el código es más fácil.
+            </div>
+
+            <div class="actividad">
+              <h3>Pasos posibles</h3>
+              <ol>
+                <li>Pedir el primer dato.</li>
+                <li>Pedir el segundo dato.</li>
+                <li>Hacer el cálculo.</li>
+                <li>Mostrar el resultado.</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PANTALLA 5 -->
+      <section class="pantalla" id="probar">
+        <div class="pantalla-header">
+          <div class="numero verde">5</div>
+          <div class="titulo-wrap">
+            <h2>Probar y recibir retroalimentación</h2>
+            <p class="subtitulo">
+              Probar es comparar lo que esperaba con lo que realmente pasó.
+            </p>
+          </div>
+        </div>
+
+        <div class="contenido">
+          <div class="texto">
+            <p>
+              Un programa no está terminado solo porque “lo escribí”. Tengo que
+              probarlo con datos concretos.
+            </p>
+            <p>
+              La retroalimentación me dice qué salió bien y qué tengo que revisar.
+              Puede venir del resultado, de un error o de otra persona.
+            </p>
+
+            <div class="tarjetas">
+              <div class="tarjeta">
+                <strong>Datos de prueba</strong>
+                Por ejemplo: 5 y 3.
+              </div>
+              <div class="tarjeta">
+                <strong>Resultado esperado</strong>
+                Lo que creo que debe salir: 8.
+              </div>
+              <div class="tarjeta">
+                <strong>Resultado obtenido</strong>
+                Lo que realmente muestra el programa.
+              </div>
+            </div>
+
+            <div class="idea-clave">
+              Idea clave: probar no es castigo. Probar me da información para mejorar.
+            </div>
+          </div>
+
+          <img
+            class="imagen-didactica"
+            src="imagen5.png"
+            alt="Probar y recibir retroalimentación: comparar resultado esperado y obtenido"
+          />
+        </div>
+      </section>
+
+      <!-- PANTALLA 6 -->
+      <section class="pantalla" id="espiral">
+        <div class="pantalla-header">
+          <div class="numero violeta">6</div>
+          <div class="titulo-wrap">
+            <h2>Resolver es mejorar: la espiral</h2>
+            <p class="subtitulo">
+              Si algo no funciona, vuelvo a revisar. Pero no vuelvo igual: vuelvo sabiendo más.
+            </p>
+          </div>
+        </div>
+
+        <img
+          class="imagen-didactica imagen-completa"
+          src="imagen6.png"
+          alt="Espiral de resolución de problemas: entender, analizar, proponer, probar y mejorar"
+        />
+
+        <div class="contenido" style="margin-top: 26px;">
+          <div class="texto">
+            <p>
+              Resolver problemas no es un círculo cerrado. En un círculo vuelvo al
+              mismo lugar.
+            </p>
+            <p>
+              En una espiral vuelvo a revisar, pero con más información. El problema
+              ya no es igual: ahora entiendo mejor qué falta o qué está mal.
+            </p>
+          </div>
+
+          <div class="idea-clave">
+            Idea clave: cada prueba achica el problema. Cada corrección mejora la solución.
+          </div>
+        </div>
+      </section>
+
+      <!-- EVALUACIÓN FINAL -->
+      <section class="evaluacion" id="evaluacion">
+        <h2>Preguntas finales</h2>
+        <p>
+          Respondé en video, en texto o en una hoja. Usá las imágenes y las ideas
+          del material para explicar.
+        </p>
+
+        <div class="pregunta">
+          <h3>1. Rol del programador</h3>
+          <p>¿Por qué ahora tenemos que pensar desde el rol del programador?</p>
+          <p class="respuesta-guia">
+            Ayuda: pensá en la diferencia entre usar un programa y crear instrucciones.
+          </p>
+        </div>
+
+        <div class="pregunta">
+          <h3>2. Entender</h3>
+          <p>Con tus palabras: ¿qué significa entender un problema?</p>
+          <p class="respuesta-guia">
+            Ayuda: no alcanza con copiar la consigna.
+          </p>
+        </div>
+
+        <div class="pregunta">
+          <h3>3. Analizar</h3>
+          <p>
+            En un problema de programación, ¿qué son los datos de entrada y qué es
+            el resultado de salida?
+          </p>
+        </div>
+
+        <div class="pregunta">
+          <h3>4. Proponer</h3>
+          <p>
+            Antes de escribir Java, ¿por qué conviene ordenar los pasos de la solución?
+          </p>
+        </div>
+
+        <div class="pregunta">
+          <h3>5. Probar</h3>
+          <p>
+            Si un programa debe sumar 5 y 3, ¿qué resultado espero? ¿Para qué me sirve
+            comparar lo esperado con lo obtenido?
+          </p>
+        </div>
+
+        <div class="pregunta">
+          <h3>6. La espiral</h3>
+          <p>
+            ¿Por qué resolver problemas se parece a una espiral y no a un círculo?
+          </p>
+          <p class="respuesta-guia">
+            Ayuda: pensá qué aprendés después de cada prueba.
+          </p>
+        </div>
+
+        <div class="pregunta">
+          <h3>7. Aplicación</h3>
+          <p>
+            Leé este problema: “Pedir dos notas y mostrar el promedio”.
+            Explicá:
+          </p>
+          <ol>
+            <li>¿Qué me piden?</li>
+            <li>¿Qué datos necesito?</li>
+            <li>¿Qué resultado debe salir?</li>
+            <li>¿Cómo lo probarías?</li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="cierre">
+        <h2>Para cerrar</h2>
+        <p>
+          El programador no empieza escribiendo código a ciegas. Primero entiende,
+          analiza, propone, prueba y mejora. Así el problema se vuelve más claro y
+          la solución mejora paso a paso.
+        </p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <img src="logo_PM.png" alt="Logo PM" />
+      Programación I · Pensamiento Computacional · Profe Macón · 2026
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,870 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Variables en Java · Profe Macón</title>
+
+    <style>
+      :root {
+        --white: #ffffff;
+        --gray-light: #f4f2f5;
+        --gray: #b2acac;
+        --gray-mid: #949494;
+        --gray-dark: #827d7d;
+        --black: #000000;
+        --violet: #988db3;
+        --teal: #00a99d;
+
+        --usuario: #3b82f6;
+        --programa: #22c55e;
+        --programador: #f97316;
+        --idea: #f6c453;
+        --error: #ef4444;
+        --ok: #22c55e;
+        --shadow: 0 14px 35px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: var(--gray-light);
+        color: var(--black);
+        line-height: 1.6;
+      }
+
+      header {
+        background: rgba(255, 255, 255, 0.96);
+        color: var(--black);
+        padding: 14px 5%;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 2px 14px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(8px);
+      }
+
+      .nav {
+        max-width: 1180px;
+        margin: auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 22px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        min-width: 210px;
+      }
+
+      .brand-logo {
+        height: 46px;
+        width: auto;
+        display: block;
+      }
+
+      .brand-text {
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        color: var(--black);
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        font-weight: 800;
+        font-size: 0.95rem;
+      }
+
+      .chip {
+        background: var(--gray-light);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 999px;
+        padding: 8px 14px;
+        white-space: nowrap;
+      }
+
+      .azul { color: var(--usuario); }
+      .verde { color: var(--programa); }
+      .naranja { color: var(--programador); }
+      .teal { color: var(--teal); }
+      .violet { color: var(--violet); }
+
+      .hero {
+        background:
+          radial-gradient(circle at 16% 20%, rgba(152, 141, 179, 0.24), transparent 30%),
+          radial-gradient(circle at 82% 18%, rgba(0, 169, 157, 0.18), transparent 28%),
+          var(--white);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        text-align: center;
+        padding: 64px 20px 50px;
+      }
+
+      .hero-logo {
+        max-width: 300px;
+        width: 58%;
+        margin: 0 auto 18px;
+        display: block;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.05rem, 5vw, 3.9rem);
+        line-height: 1.05;
+        margin-bottom: 18px;
+        color: var(--black);
+      }
+
+      .hero p {
+        font-size: 1.18rem;
+        max-width: 850px;
+        margin: 0 auto;
+        color: #2d2d2d;
+      }
+
+      .hero strong {
+        color: var(--teal);
+      }
+
+      .container {
+        width: 92%;
+        max-width: 1180px;
+        margin: auto;
+        padding: 44px 0;
+      }
+
+      .intro-grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(120px, 1fr));
+        gap: 12px;
+        margin-top: 28px;
+      }
+
+      .intro-step {
+        background: var(--white);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 18px;
+        padding: 14px 12px;
+        font-weight: 850;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+      }
+
+      .pantalla {
+        background: var(--white);
+        border-radius: 28px;
+        padding: 34px;
+        margin-bottom: 42px;
+        box-shadow: var(--shadow);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+      }
+
+      .pantalla-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 24px;
+      }
+
+      .numero {
+        background: var(--teal);
+        color: var(--white);
+        min-width: 48px;
+        height: 48px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.35rem;
+        font-weight: 900;
+        box-shadow: 0 8px 18px rgba(0, 169, 157, 0.24);
+      }
+
+      .numero.violeta {
+        background: var(--violet);
+        box-shadow: 0 8px 18px rgba(152, 141, 179, 0.28);
+      }
+
+      .numero.naranja {
+        background: var(--programador);
+        box-shadow: 0 8px 18px rgba(249, 115, 22, 0.22);
+      }
+
+      .numero.verde {
+        background: var(--programa);
+        box-shadow: 0 8px 18px rgba(34, 197, 94, 0.22);
+      }
+
+      .numero.azul {
+        background: var(--usuario);
+        box-shadow: 0 8px 18px rgba(59, 130, 246, 0.22);
+      }
+
+      .titulo-wrap {
+        flex: 1;
+      }
+
+      .pantalla h2 {
+        font-size: clamp(1.75rem, 3vw, 2.45rem);
+        line-height: 1.12;
+        color: var(--black);
+        margin-bottom: 8px;
+      }
+
+      .subtitulo {
+        color: var(--gray-dark);
+        font-size: 1.05rem;
+        font-weight: 650;
+      }
+
+      .contenido {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+        gap: 30px;
+        align-items: center;
+      }
+
+      .contenido.invertido {
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      }
+
+      .texto {
+        font-size: 1.08rem;
+        color: #222;
+      }
+
+      .texto p + p {
+        margin-top: 12px;
+      }
+
+      .texto ul,
+      .texto ol {
+        padding-left: 1.25rem;
+        margin-top: 12px;
+      }
+
+      .texto li {
+        margin: 0.34rem 0;
+      }
+
+      .idea-clave {
+        border-left: 6px solid var(--teal);
+        background: linear-gradient(90deg, rgba(0, 169, 157, 0.1), rgba(152, 141, 179, 0.08));
+        padding: 16px 18px;
+        border-radius: 16px;
+        margin: 20px 0;
+        font-weight: 750;
+      }
+
+      .advertencia {
+        border-left-color: var(--programador);
+        background: linear-gradient(90deg, rgba(249, 115, 22, 0.1), rgba(246, 196, 83, 0.14));
+      }
+
+      .java-box {
+        background: #101828;
+        color: #f8fafc;
+        padding: 18px;
+        border-radius: 18px;
+        margin: 18px 0;
+        overflow-x: auto;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+      }
+
+      .java-box pre {
+        margin: 0;
+      }
+
+      code,
+      pre {
+        font-family: Consolas, "Courier New", monospace;
+        font-size: 0.98rem;
+      }
+
+      .inline-code {
+        background: rgba(152, 141, 179, 0.18);
+        padding: 2px 7px;
+        border-radius: 7px;
+        font-family: Consolas, "Courier New", monospace;
+        font-weight: 800;
+      }
+
+      .imagen-didactica {
+        width: 100%;
+        display: block;
+        border-radius: 22px;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+        background: var(--white);
+      }
+
+      .imagen-completa {
+        margin-top: 22px;
+      }
+
+      .tarjetas {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+        gap: 14px;
+        margin: 22px 0 10px;
+      }
+
+      .tarjeta {
+        background: var(--gray-light);
+        border-radius: 18px;
+        padding: 18px;
+        border: 1px solid rgba(0, 0, 0, 0.06);
+      }
+
+      .tarjeta strong {
+        display: block;
+        margin-bottom: 6px;
+      }
+
+      .tarjeta.tipo-int { border-left: 6px solid var(--usuario); }
+      .tarjeta.tipo-double { border-left: 6px solid var(--teal); }
+      .tarjeta.tipo-string { border-left: 6px solid var(--violet); }
+
+      .tabla-partes {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 18px 0;
+        overflow: hidden;
+        border-radius: 16px;
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.07);
+      }
+
+      .tabla-partes th,
+      .tabla-partes td {
+        padding: 12px 14px;
+        text-align: left;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+        vertical-align: top;
+      }
+
+      .tabla-partes th {
+        background: var(--gray-light);
+        font-weight: 900;
+      }
+
+      .tabla-partes tr:last-child td {
+        border-bottom: none;
+      }
+
+      .nota {
+        margin-top: 22px;
+        background: var(--gray-light);
+        padding: 18px;
+        border-left: 6px solid var(--violet);
+        border-radius: 18px;
+      }
+
+      .nota h3 {
+        margin-bottom: 10px;
+        color: var(--black);
+        font-size: 1.15rem;
+      }
+
+      .cierre {
+        background: var(--black);
+        color: var(--white);
+        border-radius: 28px;
+        padding: 30px;
+        margin-top: 10px;
+        box-shadow: var(--shadow);
+      }
+
+      .cierre h2 {
+        color: var(--white);
+        margin-bottom: 10px;
+      }
+
+      .cierre p {
+        color: #f2f2f2;
+        max-width: 900px;
+      }
+
+      .footer {
+        background: var(--white);
+        text-align: center;
+        padding: 34px 20px;
+        color: var(--gray-dark);
+        font-size: 0.95rem;
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+      }
+
+      .footer img {
+        display: block;
+        margin: 0 auto 12px;
+        height: 42px;
+        width: auto;
+      }
+
+      @media (max-width: 920px) {
+        .nav {
+          flex-direction: column;
+        }
+
+        .brand {
+          justify-content: center;
+        }
+
+        .contenido,
+        .contenido.invertido {
+          grid-template-columns: 1fr;
+        }
+
+        .pantalla {
+          padding: 24px;
+        }
+
+        .intro-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 560px) {
+        header {
+          padding: 12px 4%;
+        }
+
+        .brand-logo {
+          height: 38px;
+        }
+
+        .brand-text {
+          display: none;
+        }
+
+        .chip {
+          font-size: 0.86rem;
+          padding: 7px 10px;
+        }
+
+        .hero {
+          padding: 42px 16px 34px;
+        }
+
+        .pantalla {
+          border-radius: 22px;
+          padding: 20px;
+        }
+
+        .numero {
+          min-width: 42px;
+          height: 42px;
+          border-radius: 14px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <nav class="nav" aria-label="Navegación principal">
+        <div class="brand">
+          <img class="brand-logo" src="LogoProfeMacon.png" alt="Logo Profe Macón" />
+          <div class="brand-text">Profe Macón</div>
+        </div>
+
+        <div class="topbar" aria-label="Ideas centrales de la actividad">
+          <div class="chip azul">📥 datos</div>
+          <div class="chip teal">📦 variables</div>
+          <div class="chip naranja">☕ Java</div>
+        </div>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <img class="hero-logo" src="LogoProfeMacon.png" alt="Profe Macón" />
+
+      <h1>Variables en Java</h1>
+
+      <p>
+        Ya sabemos que el usuario ingresa datos y que el programa sigue instrucciones.
+        Ahora vamos a ver cómo el programa <strong>guarda esos datos</strong> usando
+        variables y cómo eso se escribe en Java.
+      </p>
+
+      <div class="intro-grid" aria-label="Recorrido de la actividad">
+        <div class="intro-step">1. Guardar datos</div>
+        <div class="intro-step">2. Caja con nombre</div>
+        <div class="intro-step">3. Variable en Java</div>
+        <div class="intro-step">4. Tipos de dato</div>
+        <div class="intro-step">5. Usar variables</div>
+      </div>
+    </section>
+
+    <main class="container">
+      <!-- PANTALLA 1 -->
+      <section class="pantalla" id="guardar-datos">
+        <div class="pantalla-header">
+          <div class="numero azul">1</div>
+          <div class="titulo-wrap">
+            <h2>El programa necesita guardar datos</h2>
+            <p class="subtitulo">
+              Si el usuario ingresa un dato, el programa debe guardarlo para poder usarlo después.
+            </p>
+          </div>
+        </div>
+
+        <div class="contenido">
+          <div class="texto">
+            <p>
+              En una actividad anterior vimos que el usuario puede ingresar datos. Por ejemplo,
+              puede escribir una edad: <span class="inline-code">15</span>.
+            </p>
+            <p>
+              Pero el programa no puede trabajar con ese dato si no lo guarda en algún lugar.
+              Ese lugar se llama <strong>variable</strong>.
+            </p>
+
+            <div class="idea-clave">
+              Idea clave: una variable permite que el programa recuerde un dato mientras se está ejecutando.
+            </div>
+
+            <div class="java-box" aria-label="Ejemplo de variable edad en Java">
+<pre><code>int edad = 15;</code></pre>
+            </div>
+
+            <p>
+              Esta línea dice: “guardá el número <strong>15</strong> en una variable llamada
+              <strong>edad</strong>”.
+            </p>
+          </div>
+
+          <img class="imagen-didactica" src="01.png" alt="Usuario ingresa edad 15, el programa guarda el dato y el programador crea la variable" />
+        </div>
+      </section>
+
+      <!-- PANTALLA 2 -->
+      <section class="pantalla" id="caja-con-nombre">
+        <div class="pantalla-header">
+          <div class="numero violeta">2</div>
+          <div class="titulo-wrap">
+            <h2>Una variable es una caja con nombre</h2>
+            <p class="subtitulo">
+              La caja guarda un valor. El nombre permite encontrar ese valor después.
+            </p>
+          </div>
+        </div>
+
+        <div class="contenido invertido">
+          <img class="imagen-didactica" src="02.png" alt="Variable como caja amarilla con nombre edad y valor 15" />
+
+          <div class="texto">
+            <p>
+              Para entender una variable, podemos imaginar una caja. La caja tiene una etiqueta
+              con el <strong>nombre</strong> y adentro guarda un <strong>valor</strong>.
+            </p>
+            <p>
+              En el ejemplo, el nombre de la variable es <span class="inline-code">edad</span>
+              y el valor guardado es <span class="inline-code">15</span>.
+            </p>
+
+            <div class="tarjetas">
+              <div class="tarjeta">
+                <strong>Nombre</strong>
+                Sirve para identificar la variable. Ejemplo: <span class="inline-code">edad</span>.
+              </div>
+              <div class="tarjeta">
+                <strong>Valor</strong>
+                Es el dato guardado. Ejemplo: <span class="inline-code">15</span>.
+              </div>
+            </div>
+
+            <div class="idea-clave">
+              Si después uso el nombre <span class="inline-code">edad</span>, Java busca el valor guardado en esa variable.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PANTALLA 3 -->
+      <section class="pantalla" id="variable-java">
+        <div class="pantalla-header">
+          <div class="numero naranja">3</div>
+          <div class="titulo-wrap">
+            <h2>Cómo se escribe una variable en Java</h2>
+            <p class="subtitulo">
+              En Java no alcanza con guardar un valor: también debo indicar el tipo de dato.
+            </p>
+          </div>
+        </div>
+
+        <div class="contenido">
+          <div class="texto">
+            <p>
+              Java necesita una forma precisa para crear variables. Por eso escribimos la línea
+              siguiendo una estructura:
+            </p>
+
+            <div class="java-box" aria-label="Partes de una declaración de variable Java">
+<pre><code>int edad = 15;</code></pre>
+            </div>
+
+            <table class="tabla-partes" aria-label="Partes de una variable en Java">
+              <thead>
+                <tr>
+                  <th>Parte</th>
+                  <th>Qué significa</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="inline-code">int</span></td>
+                  <td>Tipo de dato: indica que voy a guardar un número entero.</td>
+                </tr>
+                <tr>
+                  <td><span class="inline-code">edad</span></td>
+                  <td>Nombre de la variable.</td>
+                </tr>
+                <tr>
+                  <td><span class="inline-code">=</span></td>
+                  <td>Asignación: guarda el valor en la variable.</td>
+                </tr>
+                <tr>
+                  <td><span class="inline-code">15</span></td>
+                  <td>Valor guardado.</td>
+                </tr>
+                <tr>
+                  <td><span class="inline-code">;</span></td>
+                  <td>Fin de la instrucción.</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="idea-clave advertencia">
+              En Java, el signo <span class="inline-code">=</span> no se lee como “es igual” de matemática. Se usa para asignar: guardar un valor en una variable.
+            </div>
+          </div>
+
+          <img class="imagen-didactica" src="03.png" alt="Partes de la declaración int edad igual 15 punto y coma" />
+        </div>
+      </section>
+
+      <!-- PANTALLA 4 -->
+      <section class="pantalla" id="tipos-datos">
+        <div class="pantalla-header">
+          <div class="numero verde">4</div>
+          <div class="titulo-wrap">
+            <h2>Tres tipos de datos básicos</h2>
+            <p class="subtitulo">
+              El tipo le dice a Java qué clase de dato va a guardar la variable.
+            </p>
+          </div>
+        </div>
+
+        <div class="contenido invertido">
+          <img class="imagen-didactica" src="04.png" alt="Tipos de datos int, double y String con ejemplos" />
+
+          <div class="texto">
+            <p>
+              Para empezar, vamos a trabajar con tres tipos muy usados. Cada tipo acepta una clase
+              diferente de dato.
+            </p>
+
+            <div class="tarjetas">
+              <div class="tarjeta tipo-int">
+                <strong><span class="inline-code">int</span></strong>
+                Guarda números enteros: 15, 8, 2026.
+              </div>
+              <div class="tarjeta tipo-double">
+                <strong><span class="inline-code">double</span></strong>
+                Guarda números con coma decimal: 3.5, 120.50, 9.75.
+              </div>
+              <div class="tarjeta tipo-string">
+                <strong><span class="inline-code">String</span></strong>
+                Guarda texto. El texto va entre comillas: "Ana", "Hola".
+              </div>
+            </div>
+
+            <div class="java-box" aria-label="Ejemplos de int double y String">
+<pre><code>int edad = 15;
+double precio = 120.50;
+String nombre = "Ana";</code></pre>
+            </div>
+
+            <div class="idea-clave">
+              <span class="inline-code">String</span> se escribe con S mayúscula, y los textos se escriben entre comillas.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PANTALLA 5 -->
+      <section class="pantalla" id="usar-variables">
+        <div class="pantalla-header">
+          <div class="numero">5</div>
+          <div class="titulo-wrap">
+            <h2>Usar variables para calcular</h2>
+            <p class="subtitulo">
+              Guardar datos sirve porque después el programa puede usarlos en operaciones.
+            </p>
+          </div>
+        </div>
+
+        <div class="contenido">
+          <div class="texto">
+            <p>
+              Una variable no es solo un dato quieto. El programa puede usar el valor guardado para
+              hacer cálculos.
+            </p>
+
+            <div class="java-box" aria-label="Código Java para sumar variables">
+<pre><code>int numero1 = 5;
+int numero2 = 3;
+int suma = numero1 + numero2;</code></pre>
+            </div>
+
+            <p>
+              Primero se guardan dos valores. Después, la variable <span class="inline-code">suma</span>
+              guarda el resultado de usar <span class="inline-code">numero1</span> y
+              <span class="inline-code">numero2</span>.
+            </p>
+
+            <div class="idea-clave">
+              Cuando Java lee <span class="inline-code">numero1 + numero2</span>, busca los valores guardados: 5 + 3.
+            </div>
+
+            <div class="nota">
+              <h3>Acercamiento a Java real</h3>
+              <p>
+                Más adelante, esos valores no estarán escritos a mano: los pediremos al usuario con
+                <span class="inline-code">Scanner</span>. Por ahora nos concentramos en entender cómo se guardan y se usan.
+              </p>
+            </div>
+          </div>
+
+          <img class="imagen-didactica" src="05.png" alt="Variables numero1 y numero2 usadas para calcular la variable suma" />
+        </div>
+      </section>
+
+      <!-- PANTALLA 6 -->
+      <section class="pantalla" id="errores-comunes">
+        <div class="pantalla-header">
+          <div class="numero violeta">6</div>
+          <div class="titulo-wrap">
+            <h2>Java necesita precisión</h2>
+            <p class="subtitulo">
+              Tipo de dato, comillas, mayúsculas y punto y coma cambian el significado del código.
+            </p>
+          </div>
+        </div>
+
+        <img class="imagen-didactica imagen-completa" src="06.png" alt="Errores comunes al escribir variables en Java y sus correcciones" />
+
+        <div class="contenido" style="margin-top: 26px;">
+          <div class="texto">
+            <p>
+              En programación, un pequeño detalle puede hacer que el código no funcione. Eso no significa
+              que el estudiante “no sepa”: significa que hay que revisar con atención.
+            </p>
+            <p>
+              Algunos errores comunes son usar un tipo incorrecto, olvidarse de las comillas en un texto
+              o no escribir el punto y coma al final.
+            </p>
+          </div>
+
+          <div class="texto">
+            <div class="java-box" aria-label="Errores y correcciones de variables">
+<pre><code>// Error: int no guarda texto
+int edad = "quince";
+
+// Correcto
+int edad = 15;
+
+// Error: falta comillas en el texto
+String nombre = Ana;
+
+// Correcto
+String nombre = "Ana";</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="idea-clave advertencia">
+          Aprender Java también es aprender a revisar. El error no es el final: es información para corregir.
+        </div>
+      </section>
+
+      <section class="pantalla" id="codigo-completo">
+        <div class="pantalla-header">
+          <div class="numero verde">7</div>
+          <div class="titulo-wrap">
+            <h2>Un primer programa con variables</h2>
+            <p class="subtitulo">
+              Este ejemplo junta variables, cálculo y salida por pantalla.
+            </p>
+          </div>
+        </div>
+
+        <div class="texto">
+          <p>
+            Este código todavía no pide datos al usuario. Los valores están escritos directamente en el programa.
+            Eso nos permite concentrarnos en las variables y en el cálculo.
+          </p>
+
+          <div class="java-box" aria-label="Programa Java completo con variables">
+<pre><code>public class Main {
+    public static void main(String[] args) {
+        int numero1 = 5;
+        int numero2 = 3;
+        int suma = numero1 + numero2;
+
+        System.out.println(suma);
+    }
+}</code></pre>
+          </div>
+
+          <div class="tarjetas">
+            <div class="tarjeta tipo-int">
+              <strong><span class="inline-code">numero1</span></strong>
+              Guarda el valor 5.
+            </div>
+            <div class="tarjeta tipo-int">
+              <strong><span class="inline-code">numero2</span></strong>
+              Guarda el valor 3.
+            </div>
+            <div class="tarjeta tipo-double">
+              <strong><span class="inline-code">suma</span></strong>
+              Guarda el resultado de 5 + 3.
+            </div>
+            <div class="tarjeta tipo-string">
+              <strong><span class="inline-code">System.out.println</span></strong>
+              Muestra el valor guardado en pantalla.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cierre">
+        <h2>Para cerrar</h2>
+        <p>
+          Una variable es una forma de guardar información dentro del programa. En Java, para crear una variable
+          debo escribir el tipo de dato, el nombre, el signo de asignación, el valor y el punto y coma. Cuando el
+          programa usa el nombre de la variable, Java trabaja con el valor que está guardado allí.
+        </p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <img src="logo_PM.png" alt="Logo PM" />
+      Programación I · Variables en Java · Profe Macón · 2026
+    </footer>
+  </body>
+</html>
